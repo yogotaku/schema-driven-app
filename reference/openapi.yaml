@@ -22,50 +22,26 @@ paths:
       tags: []
       responses:
         '200':
-          description: User Found
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-              examples:
-                Get User Alice Smith:
-                  value:
-                    id: 142
-                    firstName: Alice
-                    lastName: Smith
-                    email: alice.smith@gmail.com
-                    dateOfBirth: '1997-10-31'
-                    emailVerified: true
-                    signUpDate: '2019-08-24'
         '404':
           description: User Not Found
-      operationId: get-users-userId
-      description: Retrieve the information of the user with the matching user ID.
+      operationId: get-user
+      description: idにマッチしたユーザー情報を取得する
     patch:
       summary: Update User Information
       operationId: patch-users-userId
       responses:
-        '200':
-          description: User Updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                Updated User Rebecca Baker:
-                  value:
-                    id: 13
-                    firstName: Rebecca
-                    lastName: Baker
-                    email: rebecca@gmail.com
-                    dateOfBirth: '1985-10-02'
-                    emailVerified: false
-                    createDate: '2019-08-24'
+        '204':
+          description: No Content
         '404':
           description: User Not Found
         '409':
           description: Email Already Taken
-      description: Update the information of an existing user.
+      description: ユーザーの情報を更新する
       requestBody:
         content:
           application/json:
@@ -93,7 +69,7 @@ paths:
                   lastName: Baker
                   dateOfBirth: '1985-10-02'
         description: Patch user properties to update.
-  /user:
+  /users:
     post:
       summary: Create New User
       operationId: post-user
@@ -114,45 +90,25 @@ paths:
                     dateOfBirth: '1996-08-24'
                     emailVerified: false
                     createDate: '2020-11-18'
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+            multipart/form-data:
+              schema:
+                type: object
+                properties: {}
         '400':
           description: Missing Required Information
         '409':
           description: Email Already Taken
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                firstName:
-                  type: string
-                lastName:
-                  type: string
-                email:
-                  type: string
-                dateOfBirth:
-                  type: string
-                  format: date
-              required:
-                - firstName
-                - lastName
-                - email
-                - dateOfBirth
-            examples:
-              Create User Bob Fellow:
-                value:
-                  firstName: Bob
-                  lastName: Fellow
-                  email: bob.fellow@gmail.com
-                  dateOfBirth: '1996-08-24'
-        description: Post the necessary fields for the API to create a new user.
-      description: Create a new user.
+      description: ユーザーを新規作成する
+    parameters: []
 components:
   schemas:
     User:
       title: User
       type: object
-      description: ''
       examples:
         - id: 142
           firstName: Alice
@@ -183,10 +139,39 @@ components:
           type: string
           format: date
           description: The date that the user was created.
+        '':
+          type: string
       required:
         - id
         - firstName
         - lastName
         - email
         - emailVerified
+  requestBodies:
+    NewUser:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              email:
+                type: string
+                format: email
+              dateOfBirth:
+                type: string
+                format: date
+            required:
+              - dateOfBirth
+          examples:
+            Example 1:
+              value:
+                firstName: string
+                lastName: string
+                email: user@example.com
+                dateOfBirth: '2019-08-24'
+      description: ''
 x-internal: false
