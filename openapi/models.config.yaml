@@ -1,0 +1,4 @@
+package: schema
+generate:
+  models: true
+output: app/src/schema/models.gen.go
