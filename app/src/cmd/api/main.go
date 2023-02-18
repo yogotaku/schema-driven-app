@@ -7,11 +7,12 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/yogotaku/schema-driven-app/app/src/infrastructure"
+	"github.com/yogotaku/schema-driven-app/app/src/schema"
 )
 
 func main() {
 	// スキーマの定義を取得
-	swagger, _ := infrastructure.GetSwagger()
+	swagger, _ := schema.GetSwagger()
 
 	// スキーマのServerInterfaceを実装した型を取得
 	server := infrastructure.NewApiServer()
@@ -24,7 +25,7 @@ func main() {
 	// panicが起きた際に復帰する
 	r.Use(middleware.Recoverer)
 
-	infrastructure.HandlerFromMux(server, r)
+	schema.HandlerFromMux(server, r)
 
 	http.ListenAndServe(":80", r)
 

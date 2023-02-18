@@ -12,13 +12,13 @@ func NewUserController() *UserController {
 }
 
 func (c *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("PostUser")
+	fmt.Println("CreateUser")
 }
 
 func (c *UserController) FindUserByID(w http.ResponseWriter, r *http.Request, userId int) {
-	fmt.Println("GetUser")
+	fmt.Println("FindUserByID")
 }
 
 func (c *UserController) UpdateUserByID(w http.ResponseWriter, r *http.Request, userId int) {
-	fmt.Println("PatchUser")
+	fmt.Println("UpdateUserByID")
 }
