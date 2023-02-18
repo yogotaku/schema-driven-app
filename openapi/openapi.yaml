@@ -145,6 +145,7 @@ components:
             createDate:
               type: string
               format: date
+              example: '2019-08-24'
               description: ユーザー情報の作成日時
         - required:
           - id
@@ -156,7 +157,7 @@ components:
           email: alice.smith@gmail.com
           dateOfBirth: '1997-10-31'
           emailVerified: true
-          signUpDate: '2019-08-24'
+          createDate: '2019-08-24'
     NewUser:
       title: NewUser
       type: object
@@ -171,6 +172,7 @@ components:
         dateOfBirth:
           type: string
           format: date
+          example: '2019-08-24'
       required:
         - firstName
         - lastName
