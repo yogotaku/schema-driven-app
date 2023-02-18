@@ -22,8 +22,8 @@ paths:
         description: データベースに存在するユーザーのID
     get:
       summary: Get User Info by User ID
-      operationId: findUserByID
       description: idにマッチしたユーザー情報を取得する
+      operationId: findUserByID
       tags:
         - user
       responses:
@@ -41,8 +41,8 @@ paths:
                 $ref: '#/components/schemas/Error'
     patch:
       summary: Update User Information
-      operationId: updateUserByID
       description: ユーザーの情報を更新する
+      operationId: updateUserByID
       tags:
         - patch-user
       requestBody:
@@ -62,8 +62,8 @@ paths:
   /users:
     post:
       summary: Create New User
-      operationId: createUser
       description: ユーザーを新規作成する
+      operationId: createUser
       tags:
         - user
       requestBody:
@@ -90,11 +90,65 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /pets:
+    get:
+      summary: Returns all pets
+      description: |
+        ペット情報を検索する
+      operationId: findPets
+      tags:
+        - pet
+      parameters:
+        - name: tags
+          in: query
+          description: 検索したいペットのタグ情報
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: limit
+          in: query
+          description: 検索件数の上限
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
     User:
-      title: User
-      type: object
+      allOf:
+        - $ref: '#/components/schemas/NewUser'
+        - properties:
+            id:
+              type: integer
+              description: ユーザーのユニークID.
+            emailVerified:
+              type: boolean
+              description: |
+                ユーザーがメール認証を完了しているかどうか。
+                完了していればtrue。
+            createDate:
+              type: string
+              format: date
+              description: ユーザー情報の作成日時
+        - required:
+          - id
+          - emailVerified
       examples:
         - id: 142
           firstName: Alice
@@ -103,36 +157,6 @@ components:
           dateOfBirth: '1997-10-31'
           emailVerified: true
           signUpDate: '2019-08-24'
-      properties:
-        id:
-          type: integer
-          description: ユーザーのユニークID.
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-          format: email
-        dateOfBirth:
-          type: string
-          format: date
-          example: '1997-10-31'
-        emailVerified:
-          type: boolean
-          description: |
-            ユーザーがメール認証を完了しているかどうか。
-            完了していればtrue。
-        createDate:
-          type: string
-          format: date
-          description: ユーザー情報の作成日時
-      required:
-        - id
-        - firstName
-        - lastName
-        - email
-        - emailVerified
     NewUser:
       title: NewUser
       type: object
@@ -151,6 +175,27 @@ components:
         - firstName
         - lastName
         - email
+    Pet:
+      allOf:
+        - $ref: '#/components/schemas/NewPet'
+        - properties:
+            id:
+              type: integer
+              description: ペットのユニークID
+        - required:
+            - id
+      examples:
+        - id: 15
+          name: Pochi
+          tag: dog
+    NewPet:
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        tag:
+          type: string
     Error:
       required:
         - code
@@ -158,12 +203,10 @@ components:
       properties:
         code:
           type: integer
-          format: int32
           description: Error code
         message:
           type: string
           description: Error message
-  requestBodies: {}
-x-internal: false
 tags:
   - name: user
+  - name: pet

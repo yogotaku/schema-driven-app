@@ -10,10 +10,16 @@ import (
 // Error defines model for Error.
 type Error struct {
 	// Code Error code
-	Code int32 `json:"code"`
+	Code int `json:"code"`
 
 	// Message Error message
 	Message string `json:"message"`
+}
+
+// NewPet defines model for NewPet.
+type NewPet struct {
+	Name string  `json:"name"`
+	Tag  *string `json:"tag,omitempty"`
 }
 
 // NewUser defines model for NewUser.
@@ -22,6 +28,14 @@ type NewUser struct {
 	Email       openapi_types.Email `json:"email"`
 	FirstName   string              `json:"firstName"`
 	LastName    string              `json:"lastName"`
+}
+
+// Pet defines model for Pet.
+type Pet struct {
+	// Id ペットのユニークID
+	Id   int     `json:"id"`
+	Name string  `json:"name"`
+	Tag  *string `json:"tag,omitempty"`
 }
 
 // User defines model for User.
@@ -39,6 +53,15 @@ type User struct {
 	// Id ユーザーのユニークID.
 	Id       int    `json:"id"`
 	LastName string `json:"lastName"`
+}
+
+// FindPetsParams defines parameters for FindPets.
+type FindPetsParams struct {
+	// Tags 検索したいペットのタグ情報
+	Tags *[]string `form:"tags,omitempty" json:"tags,omitempty"`
+
+	// Limit 検索件数の上限
+	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
 // CreateUserJSONRequestBody defines body for CreateUser for application/json ContentType.
