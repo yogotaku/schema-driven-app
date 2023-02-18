@@ -12,5 +12,7 @@ openapi-server:
 # openapiからコードを自動生成します
 openapi-schema: openapi-models openapi-server
 
-
+.PNONY: up
+up:
+	docker compose up
 
