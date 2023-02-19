@@ -15,3 +15,11 @@ func FindUserByID(id int) data.User {
 
 	return user
 }
+
+func CreateUser(user data.User) data.User {
+	users := data.Users
+	lastUser := users[len(users)-1]
+	user.ID = lastUser.ID + 1
+	users = append(users, user)
+	return user
+}

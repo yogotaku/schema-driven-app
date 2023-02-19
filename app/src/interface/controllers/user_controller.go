@@ -4,8 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
+	"github.com/yogotaku/schema-driven-app/app/src/data"
 	"github.com/yogotaku/schema-driven-app/app/src/interface/gateways"
+	"github.com/yogotaku/schema-driven-app/app/src/schema"
 )
 
 type UserController struct{}
@@ -15,7 +18,20 @@ func NewUserController() *UserController {
 }
 
 func (c *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("CreateUser")
+	var body schema.NewUser
+	json.NewDecoder(r.Body).Decode(&body)
+
+	u := data.User{
+		FirstName:   body.FirstName,
+		LastName:    body.LastName,
+		Email:       string(body.Email),
+		DateOfBirth: body.DateOfBirth.Format(time.DateOnly),
+	}
+
+	user := gateways.CreateUser(u)
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(user)
 }
 
 func (c *UserController) FindUserByID(w http.ResponseWriter, r *http.Request, userId int) {
