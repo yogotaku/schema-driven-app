@@ -6,6 +6,7 @@ import (
 	oapiMiddleware "github.com/deepmap/oapi-codegen/pkg/chi-middleware"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 	"github.com/yogotaku/schema-driven-app/app/src/infrastructure"
 	"github.com/yogotaku/schema-driven-app/app/src/schema"
 )
@@ -24,6 +25,12 @@ func main() {
 
 	// panicが起きた際に復帰する
 	r.Use(middleware.Recoverer)
+
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins: []string{"http://localhost:8100"},
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders: []string{"Accept", "Content-Type"},
+	}))
 
 	schema.HandlerFromMux(server, r)
 
