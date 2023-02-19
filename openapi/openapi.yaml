@@ -1,8 +1,6 @@
-openapi: 3.1.0
-x-stoplight:
-  id: mw9ar7a8zjvlc
+openapi: 3.0.0
 info:
-  title: openapi
+  title: schema-driven-app
   version: '1.0'
   description: 2023/03/02に開催する勉強会用のサンプルAPI
   contact:
@@ -144,7 +142,7 @@ components:
         - required:
           - id
           - emailVerified
-      examples:
+      example:
         - id: 142
           firstName: Alice
           lastName: Smith
@@ -180,7 +178,7 @@ components:
               description: ペットのユニークID
         - required:
             - id
-      examples:
+      example:
         - id: 15
           name: Pochi
           tag: dog
