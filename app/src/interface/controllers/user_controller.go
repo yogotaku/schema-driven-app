@@ -29,14 +29,14 @@ func (c *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	user := gateways.CreateUser(u)
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(user)
 }
 
 func (c *UserController) FindUserByID(w http.ResponseWriter, r *http.Request, userId int) {
 	user := gateways.FindUserByID(userId)
 
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(user)
 }
 
