@@ -1,9 +1,10 @@
 package controllers
 
 import (
-	"fmt"
+	"encoding/json"
 	"net/http"
 
+	"github.com/yogotaku/schema-driven-app/app/src/interface/gateways"
 	"github.com/yogotaku/schema-driven-app/app/src/schema"
 )
 
@@ -14,5 +15,14 @@ func NewPetController() *PetController {
 }
 
 func (c *PetController) FindPets(w http.ResponseWriter, r *http.Request, params schema.FindPetsParams) {
-	fmt.Println("FindPets")
+	var tags []string
+
+	if params.Tags != nil {
+		tags = *params.Tags
+	}
+
+	pets := gateways.FindPets(tags, params.Limit)
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(pets)
 }
