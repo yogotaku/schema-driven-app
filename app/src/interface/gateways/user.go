@@ -23,3 +23,14 @@ func CreateUser(user data.User) data.User {
 	users = append(users, user)
 	return user
 }
+
+func UpdateUser(user data.User) data.User {
+	users := data.Users
+	for i := range users {
+		if users[i].ID == user.ID {
+			users[i] = user
+			break
+		}
+	}
+	return user
+}

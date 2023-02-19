@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -37,10 +36,21 @@ func (c *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
 func (c *UserController) FindUserByID(w http.ResponseWriter, r *http.Request, userId int) {
 	user := gateways.FindUserByID(userId)
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(user)
 }
 
 func (c *UserController) UpdateUserByID(w http.ResponseWriter, r *http.Request, userId int) {
-	fmt.Println("UpdateUserByID")
+	var body schema.NewUser
+	json.NewDecoder(r.Body).Decode(&body)
+
+	u := gateways.FindUserByID(userId)
+	u.FirstName = body.FirstName
+	u.LastName = body.LastName
+	u.Email = string(body.Email)
+	u.DateOfBirth = body.DateOfBirth.Format(time.DateOnly)
+
+	gateways.UpdateUser(u)
+
+	w.WriteHeader(http.StatusNoContent)
 }
