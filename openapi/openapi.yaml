@@ -1,0 +1,206 @@
+openapi: 3.0.0
+info:
+  title: schema-driven-app
+  version: '1.0'
+  description: 2023/03/02に開催する勉強会用のサンプルAPI
+  contact:
+    email: hoge@example.com
+    name: takuya yogo
+servers:
+  - url: 'http://localhost:8090'
+    description: localhost
+paths:
+  '/users/{userId}':
+    parameters:
+      - schema:
+          type: integer
+        name: userId
+        in: path
+        required: true
+        description: データベースに存在するユーザーのID
+    get:
+      summary: Get User Info by User ID
+      description: idにマッチしたユーザー情報を取得する
+      operationId: findUserByID
+      tags:
+        - user
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      summary: Update User Information
+      description: ユーザーの情報を更新する
+      operationId: updateUserByID
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUser'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users:
+    post:
+      summary: Create New User
+      description: ユーザーを新規作成する
+      operationId: createUser
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUser'
+      responses:
+        '201':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /pets:
+    get:
+      summary: Returns all pets
+      description: |
+        ペット情報を検索する
+      operationId: findPets
+      tags:
+        - pet
+      parameters:
+        - name: tags
+          in: query
+          description: 検索したいペットのタグ情報
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: limit
+          in: query
+          description: 検索件数の上限
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    User:
+      allOf:
+        - $ref: '#/components/schemas/NewUser'
+        - properties:
+            id:
+              type: integer
+              description: ユーザーのユニークID.
+            emailVerified:
+              type: boolean
+              description: |
+                ユーザーがメール認証を完了しているかどうか。
+                完了していればtrue。
+            createDate:
+              type: string
+              format: date
+              example: '2019-08-24'
+              description: ユーザー情報の作成日時
+        - required:
+          - id
+          - emailVerified
+      example:
+        - id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          createDate: '2019-08-24'
+    NewUser:
+      title: NewUser
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        dateOfBirth:
+          type: string
+          format: date
+          example: '2019-08-24'
+      required:
+        - firstName
+        - lastName
+        - email
+    Pet:
+      allOf:
+        - $ref: '#/components/schemas/NewPet'
+        - properties:
+            id:
+              type: integer
+              description: ペットのユニークID
+        - required:
+            - id
+      example:
+        - id: 15
+          name: Pochi
+          tag: dog
+    NewPet:
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        tag:
+          type: string
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          description: Error code
+        message:
+          type: string
+          description: Error message
+tags:
+  - name: user
+  - name: pet

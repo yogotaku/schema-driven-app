@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./dockerfile/api/Dockerfile
+    volumes:
+      - .:/home
+    ports:
+      - "8090:80"
+  swagger-ui:
+    container_name: swagger-ui
+    image: swaggerapi/swagger-ui
+    ports:
+      - "8100:8080"
+    volumes:
+      - ./openapi/openapi.yaml:/openapi.yaml
+    environment:
+      SWAGGER_JSON: /openapi.yaml
