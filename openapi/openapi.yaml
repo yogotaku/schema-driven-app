@@ -44,7 +44,7 @@ paths:
       description: ユーザーの情報を更新する
       operationId: updateUserByID
       tags:
-        - patch-user
+        - user
       requestBody:
         content:
           application/json:
