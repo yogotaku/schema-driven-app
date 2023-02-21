@@ -2,7 +2,7 @@ import axios from 'axios';
 import { isUser, type User, type NewUser, type Pet, isPet } from 'type';
 
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_ENDPOINT_URL,
+  baseURL: import.meta.env.VITE_PRISM_MOCK_URL,
   timeout: 10000,
   paramsSerializer: { indexes: null },
 });
