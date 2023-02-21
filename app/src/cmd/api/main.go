@@ -20,17 +20,18 @@ func main() {
 
 	r := chi.NewRouter()
 
-	// リクエストがスキーマの定義に合っているかのバリデーション
-	r.Use(oapiMiddleware.OapiRequestValidator(swagger))
-
 	// panicが起きた際に復帰する
 	r.Use(middleware.Recoverer)
 
+	// CORS設定
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins: []string{"http://localhost:8100"},
-		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedOrigins: []string{"http://localhost:8100", "http://localhost:5173"},
+		AllowedMethods: []string{"GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders: []string{"Accept", "Content-Type"},
 	}))
+
+	// リクエストがスキーマの定義に合っているかのバリデーション
+	r.Use(oapiMiddleware.OapiRequestValidator(swagger))
 
 	schema.HandlerFromMux(server, r)
 

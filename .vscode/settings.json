@@ -1,0 +1,4 @@
+{
+  "eslint.workingDirectories": [ "./frontend/vite-app" ],
+  "typescript.tsdk": "./frontend/vite-app"
+}

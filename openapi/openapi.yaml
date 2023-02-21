@@ -142,6 +142,7 @@ components:
         - required:
           - id
           - emailVerified
+          - creatDate
       example:
         - id: 142
           firstName: Alice
