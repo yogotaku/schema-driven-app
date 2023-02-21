@@ -1,9 +1,9 @@
 package data
 
 type Pet struct {
-	ID   int
-	Tag  string
-	Name string
+	ID   int `json:"id"`
+	Tag  string `json:"tag"`
+	Name string `json:"name"`
 }
 
 var Pets []Pet = []Pet{

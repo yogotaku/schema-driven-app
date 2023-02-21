@@ -1,13 +1,13 @@
 package data
 
 type User struct {
-	ID            int
-	FirstName     string
-	LastName      string
-	Email         string
-	DateOfBirth   string
-	EmailVerified bool
-	CreatedDate   string
+	ID            int    `json:"id"`
+	FirstName     string `json:"firstName"`
+	LastName      string `json:"lastName"`
+	Email         string `json:"email"`
+	DateOfBirth   string `json:"dateOfBirth"`
+	EmailVerified bool   `json:"emailVerified"`
+	CreateDate    string `json:"createDate"`
 }
 
 var Users []User = []User{
@@ -18,7 +18,7 @@ var Users []User = []User{
 		Email:         "ichiro.ichinose@example.com",
 		DateOfBirth:   "2001-01-01",
 		EmailVerified: true,
-		CreatedDate:   "2021-01-01",
+		CreateDate:    "2021-01-01",
 	},
 	{
 		ID:            2,
@@ -27,7 +27,7 @@ var Users []User = []User{
 		Email:         "jiro.ninomiya@example.com",
 		DateOfBirth:   "2002-02-02",
 		EmailVerified: true,
-		CreatedDate:   "2022-02-02",
+		CreateDate:    "2022-02-02",
 	},
 	{
 		ID:            3,
@@ -36,6 +36,6 @@ var Users []User = []User{
 		Email:         "saburo.sanbonmatsu@example.com",
 		DateOfBirth:   "2003-03-03",
 		EmailVerified: false,
-		CreatedDate:   "",
+		CreateDate:    "",
 	},
 }
