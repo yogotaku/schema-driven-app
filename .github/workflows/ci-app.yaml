@@ -14,22 +14,32 @@ jobs:
   dredd-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: docker compose build
-        run: |
-          make build
-      - name: docker compose up
-        run: |
-          docker compose up -d
-      - name: docker compose port
-        run: |
-          docker compose port api 80
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Set up Golang
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.20
+
+      - name: cache
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: v1-${{ runner.os }}-go-${{ hashFiles('go.sum') }}
+          restore-keys: |
+            v1-${{ runner.os }}-go-
+
+      - name: Get dependencies
+        run: go mod download
+
       - name: Install Dredd
         run: |
           npm install -g dredd
+
       - name: Run Dredd
         run: |
-          dredd ./openapi/openapi.yaml 0.0.0.0:8090 --hookfiles=./openapi/dredd/hook.js --reporter=apiary
+          dredd ./openapi/openapi.yaml localhost:80 --hookfiles=./openapi/dredd/hook.js --reporter=apiary
 
 
 
