@@ -14,6 +14,7 @@ paths:
     parameters:
       - schema:
           type: integer
+          minimum: 1
         name: userId
         in: path
         required: true
@@ -31,6 +32,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              example:
+                id: 142
+                firstName: Alice
+                lastName: Smith
+                email: alice.smith@gmail.com
+                dateOfBirth: '1997-10-31'
+                emailVerified: true
+                createDate: '2019-08-24'
         '400':
           description: BadRequest
           content:
@@ -114,6 +123,17 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Pet'
+              example:
+                - id: 15
+                  name: Pochi
+                  tag: dog
+                - id: 16
+                  name: Shiro
+                  tag: dog
+                - id: 17
+                  name: Tama
+                  tag: cat
+
         default:
           description: unexpected error
           content:
@@ -142,23 +162,18 @@ components:
         - required:
           - id
           - emailVerified
-          - creatDate
-      example:
-        - id: 142
-          firstName: Alice
-          lastName: Smith
-          email: alice.smith@gmail.com
-          dateOfBirth: '1997-10-31'
-          emailVerified: true
-          createDate: '2019-08-24'
+          - createDate
+
     NewUser:
       title: NewUser
       type: object
       properties:
         firstName:
           type: string
+          minLength: 1
         lastName:
           type: string
+          minLength: 1
         email:
           type: string
           format: email
@@ -176,21 +191,27 @@ components:
         - properties:
             id:
               type: integer
+              minimum: 0
               description: ペットのユニークID
         - required:
             - id
-      example:
-        - id: 15
-          name: Pochi
-          tag: dog
+
     NewPet:
       required:
         - name
+        - tag
       properties:
         name:
           type: string
+          maxLength: 6
+          minLength: 1
+          pattern: '^[A-Z]{1}[a-z]*$'
         tag:
           type: string
+          maxLength: 15
+          minLength: 1
+          pattern: '^[a-z]+$'
+
     Error:
       required:
         - code

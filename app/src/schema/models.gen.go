@@ -18,8 +18,8 @@ type Error struct {
 
 // NewPet defines model for NewPet.
 type NewPet struct {
-	Name string  `json:"name"`
-	Tag  *string `json:"tag,omitempty"`
+	Name string `json:"name"`
+	Tag  string `json:"tag"`
 }
 
 // NewUser defines model for NewUser.
@@ -33,15 +33,15 @@ type NewUser struct {
 // Pet defines model for Pet.
 type Pet struct {
 	// Id ペットのユニークID
-	Id   int     `json:"id"`
-	Name string  `json:"name"`
-	Tag  *string `json:"tag,omitempty"`
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+	Tag  string `json:"tag"`
 }
 
 // User defines model for User.
 type User struct {
 	// CreateDate ユーザー情報の作成日時
-	CreateDate  *openapi_types.Date `json:"createDate,omitempty"`
+	CreateDate  openapi_types.Date  `json:"createDate"`
 	DateOfBirth *openapi_types.Date `json:"dateOfBirth,omitempty"`
 	Email       openapi_types.Email `json:"email"`
 

@@ -16,3 +16,17 @@ openapi-schema: openapi-models openapi-server
 up:
 	docker compose up
 
+.PHONY: prism-mock
+## openapiの記述に従ってmockサーバーを起動する
+prism-mock:
+	$(MAKE) $@ -C frontend/vite-app
+
+.PHONY: prism-mock-d
+## openapiの記述に従ってmockサーバーを起動する。レスポンスデータはランダムに生成される。
+prism-mock-d:
+	$(MAKE) $@ -C frontend/vite-app
+
+.PHONT: prism-mock-local-proxy
+## openapiの記述に従ってproxyモードでmockサーバーを起動する
+prism-mock-local-proxy:
+	$(MAKE) $@ -C frontend/vite-app
