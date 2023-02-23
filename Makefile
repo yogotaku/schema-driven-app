@@ -1,5 +1,5 @@
 .PNONY: build
-up:
+build:
 	docker compose build
 
 .PNONY: up
