@@ -23,7 +23,7 @@ jobs:
           docker compose up -d
       - name: docker compose port
         run: |
-          docker compose port
+          docker compose port api 80
       # - name: Install Dredd
       #   run: |
       #     npm install -g dredd
