@@ -37,6 +37,10 @@ jobs:
         run: |
           npm install -g dredd
 
+      - name: Run Server
+        run: |
+          go run ./app/src/cmd/api/main.go
+
       - name: Run Dredd
         run: |
           dredd ./openapi/openapi.yaml localhost:80 --hookfiles=./openapi/dredd/hook.js --reporter=apiary
