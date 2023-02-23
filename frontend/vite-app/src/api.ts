@@ -3,8 +3,10 @@ import { isUser, type User, type NewUser, type Pet, isPet } from 'type';
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_PRISM_MOCK_URL,
+  // baseURL: import.meta.env.VITE_API_ENDPOINT_URL,
   timeout: 10000,
   paramsSerializer: { indexes: null },
+  headers: { 'Content-Type': 'application/json' },
 });
 
 export const getUserById = async (id: number): Promise<User | null> => {

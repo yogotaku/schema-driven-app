@@ -3,8 +3,8 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
-	"time"
 
+	"github.com/deepmap/oapi-codegen/pkg/types"
 	"github.com/yogotaku/schema-driven-app/app/src/data"
 	"github.com/yogotaku/schema-driven-app/app/src/interface/gateways"
 	"github.com/yogotaku/schema-driven-app/app/src/schema"
@@ -24,20 +24,37 @@ func (c *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
 		FirstName:   body.FirstName,
 		LastName:    body.LastName,
 		Email:       string(body.Email),
-		DateOfBirth: body.DateOfBirth.Format(time.DateOnly),
+		DateOfBirth: body.DateOfBirth.Time,
 	}
 
-	user := gateways.CreateUser(u)
+	u = gateways.CreateUser(u)
 
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(user)
+	res := schema.User{
+		Id:            u.ID,
+		FirstName:     u.FirstName,
+		LastName:      u.LastName,
+		Email:         types.Email(u.Email),
+		DateOfBirth:   &types.Date{Time: u.DateOfBirth},
+		EmailVerified: u.EmailVerified,
+		CreateDate:    types.Date{Time: u.CreateDate},
+	}
+
+	schema.RenderJSONResponse(w, http.StatusCreated, res)
 }
 
 func (c *UserController) FindUserByID(w http.ResponseWriter, r *http.Request, userId int) {
-	user := gateways.FindUserByID(userId)
+	u := gateways.FindUserByID(userId)
+	res := schema.User{
+		Id:            u.ID,
+		FirstName:     u.FirstName,
+		LastName:      u.LastName,
+		Email:         types.Email(u.Email),
+		DateOfBirth:   &types.Date{Time: u.DateOfBirth},
+		EmailVerified: u.EmailVerified,
+		CreateDate:    types.Date{Time: u.CreateDate},
+	}
 
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(user)
+	schema.RenderJSONResponse(w, http.StatusOK, res)
 }
 
 func (c *UserController) UpdateUserByID(w http.ResponseWriter, r *http.Request, userId int) {
@@ -48,9 +65,9 @@ func (c *UserController) UpdateUserByID(w http.ResponseWriter, r *http.Request, 
 	u.FirstName = body.FirstName
 	u.LastName = body.LastName
 	u.Email = string(body.Email)
-	u.DateOfBirth = body.DateOfBirth.Format(time.DateOnly)
+	u.DateOfBirth = body.DateOfBirth.Time
 
 	gateways.UpdateUser(u)
 
-	w.WriteHeader(http.StatusNoContent)
+	schema.RenderJSONResponse(w, http.StatusNoContent, nil)
 }

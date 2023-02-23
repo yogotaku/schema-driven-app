@@ -1,6 +1,10 @@
 package gateways
 
-import "github.com/yogotaku/schema-driven-app/app/src/data"
+import (
+	"time"
+
+	"github.com/yogotaku/schema-driven-app/app/src/data"
+)
 
 func FindUserByID(id int) data.User {
 	var user data.User
@@ -20,6 +24,7 @@ func CreateUser(user data.User) data.User {
 	users := data.Users
 	lastUser := users[len(users)-1]
 	user.ID = lastUser.ID + 1
+	user.CreateDate = time.Now()
 	users = append(users, user)
 	return user
 }

@@ -1,13 +1,15 @@
 package data
 
+import "time"
+
 type User struct {
-	ID            int    `json:"id"`
-	FirstName     string `json:"firstName"`
-	LastName      string `json:"lastName"`
-	Email         string `json:"email"`
-	DateOfBirth   string `json:"dateOfBirth"`
-	EmailVerified bool   `json:"emailVerified"`
-	CreateDate    string `json:"createDate"`
+	ID            int
+	FirstName     string
+	LastName      string
+	Email         string
+	DateOfBirth   time.Time
+	EmailVerified bool
+	CreateDate    time.Time
 }
 
 var Users []User = []User{
@@ -16,26 +18,26 @@ var Users []User = []User{
 		FirstName:     "Ichiro",
 		LastName:      "Ichinose",
 		Email:         "ichiro.ichinose@example.com",
-		DateOfBirth:   "2001-01-01",
+		DateOfBirth:   time.Date(2001, 1, 1, 0, 0, 0, 0, time.UTC),
 		EmailVerified: true,
-		CreateDate:    "2021-01-01",
+		CreateDate:    time.Date(2001, 1, 1, 0, 0, 0, 0, time.UTC),
 	},
 	{
 		ID:            2,
 		FirstName:     "Jiro",
 		LastName:      "Ninomiya",
 		Email:         "jiro.ninomiya@example.com",
-		DateOfBirth:   "2002-02-02",
+		DateOfBirth:   time.Date(2002, 2, 2, 0, 0, 0, 0, time.UTC),
 		EmailVerified: true,
-		CreateDate:    "2022-02-02",
+		CreateDate:    time.Date(2002, 2, 2, 0, 0, 0, 0, time.UTC),
 	},
 	{
 		ID:            3,
 		FirstName:     "Saburo",
 		LastName:      "Sanbonmatsu",
 		Email:         "saburo.sanbonmatsu@example.com",
-		DateOfBirth:   "2003-03-03",
+		DateOfBirth:   time.Date(2003, 3, 3, 0, 0, 0, 0, time.UTC),
 		EmailVerified: false,
-		CreateDate:    "",
+		CreateDate:    time.Date(2003, 3, 3, 0, 0, 0, 0, time.UTC),
 	},
 }

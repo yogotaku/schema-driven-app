@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/yogotaku/schema-driven-app/app/src/interface/gateways"
@@ -21,8 +20,17 @@ func (c *PetController) FindPets(w http.ResponseWriter, r *http.Request, params 
 		tags = *params.Tags
 	}
 
-	pets := gateways.FindPets(tags, params.Limit)
+	ps := gateways.FindPets(tags, params.Limit)
 
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(pets)
+	res := make([]schema.Pet, 0, len(ps))
+	for i := range ps {
+		p := ps[i]
+		res = append(res, schema.Pet{
+			Id:   p.ID,
+			Name: p.Name,
+			Tag:  p.Tag,
+		})
+	}
+
+	schema.RenderJSONResponse(w, http.StatusOK, res)
 }
