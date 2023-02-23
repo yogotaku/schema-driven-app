@@ -15,13 +15,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: docker compose build
+        run: |
+          make build
+      - name: docker compose build
+        run: |
+          docker compose up -d
       - name: Install Dredd
         run: |
           npm install -g dredd
       - name: Run Dredd
         run: |
-          make build
-          docker compose up -d
           make dredd
 
 
