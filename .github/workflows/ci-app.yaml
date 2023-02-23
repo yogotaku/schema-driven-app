@@ -21,7 +21,7 @@ jobs:
       - name: Run Dredd
         run: |
           make build
-          make up
+          docker compose up -d
           make dredd
 
 
