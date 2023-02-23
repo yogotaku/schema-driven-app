@@ -26,7 +26,7 @@ jobs:
           npm install -g dredd
       - name: Run Dredd
         run: |
-          dredd ./openapi/openapi.yaml http://app:8090 --hookfiles=./openapi/dredd/hook.js --reporter=apiary
+          dredd ./openapi/openapi.yaml localhost:8090 --hookfiles=./openapi/dredd/hook.js --reporter=apiary
 
 
 
