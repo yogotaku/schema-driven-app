@@ -1,0 +1,22 @@
+name: ci-app
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+
+jobs:
+  dredd-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Dredd
+        run: |
+          npm install -g dredd
+      - name: Run Dredd
+        run: |
+          cd ./openapi/dredd; dredd
+
+
+
