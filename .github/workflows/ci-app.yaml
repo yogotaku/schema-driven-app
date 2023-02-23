@@ -26,7 +26,7 @@ jobs:
           npm install -g dredd
       - name: Run Dredd
         run: |
-          dredd --config ./openapi/dredd/dredd.yml http://host.docker.internal:8090
+          dredd ./openapi/openapi.yaml http://host.docker.internal:8090 --hookfiles=./openapi/dredd/dredd.yml --reporter=apiary
 
 
 
