@@ -24,12 +24,12 @@ jobs:
       - name: docker compose port
         run: |
           docker compose port api 80
-      # - name: Install Dredd
-      #   run: |
-      #     npm install -g dredd
-      # - name: Run Dredd
-      #   run: |
-      #     dredd ./openapi/openapi.yaml localhost:8090 --hookfiles=./openapi/dredd/hook.js --reporter=apiary
+      - name: Install Dredd
+        run: |
+          npm install -g dredd
+      - name: Run Dredd
+        run: |
+          dredd ./openapi/openapi.yaml 0.0.0.0:8090 --hookfiles=./openapi/dredd/hook.js --reporter=apiary
 
 
 
