@@ -30,3 +30,13 @@ prism-mock-d:
 ## openapiの記述に従ってproxyモードでmockサーバーを起動する
 prism-mock-local-proxy:
 	$(MAKE) $@ -C frontend/vite-app
+
+.PHONY: dredd
+## dreddを使用してAPIテストを実施する
+dredd:
+	cd ./openapi/dredd; dredd
+
+.PHONY: dredd-names
+## dreddにおける各テストケースの名前を出力する
+dredd-names:
+	cd ./openapi/dredd; dredd --names
