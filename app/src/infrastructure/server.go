@@ -34,12 +34,14 @@ func RunServer() {
 
 	r := chi.NewRouter()
 
+	r.Use(middleware.Logger)
+
 	// panicが起きた際に復帰する
 	r.Use(middleware.Recoverer)
 
 	// CORS設定
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins: []string{"http://localhost:8100", "http://localhost:5173"},
+		AllowedOrigins: []string{"http://localhost:8100", "http://localhost:5173", "172.19.0.1:6364"},
 		AllowedMethods: []string{"GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders: []string{"Accept", "Content-Type"},
 	}))
@@ -47,7 +49,7 @@ func RunServer() {
 	// リクエストがスキーマの定義に合っているかのバリデーション
 	r.Use(oapiMiddleware.OapiRequestValidatorWithOptions(swagger, &oapiMiddleware.Options{
 		ErrorHandler: func(w http.ResponseWriter, message string, statusCode int) {
-			w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(statusCode)
 			json.NewEncoder(w).Encode(message)
 		},
