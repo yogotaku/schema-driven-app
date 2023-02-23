@@ -1,3 +1,11 @@
+.PNONY: build
+up:
+	docker compose build
+
+.PNONY: up
+up:
+	docker compose up
+
 .PNONY: openapi-models
 # openapiのcomponentsからコードを自動生成します
 openapi-models:
@@ -11,10 +19,6 @@ openapi-server:
 .PNONY: openapi-schema
 # openapiからコードを自動生成します
 openapi-schema: openapi-models openapi-server
-
-.PNONY: up
-up:
-	docker compose up
 
 .PHONY: prism-mock
 ## openapiの記述に従ってmockサーバーを起動する
