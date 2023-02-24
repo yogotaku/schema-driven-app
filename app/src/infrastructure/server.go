@@ -41,7 +41,7 @@ func RunServer() {
 
 	// CORS設定
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins: []string{"*"},
+		AllowedOrigins: []string{"http://localhost:8100", "http://localhost:5173", "172.19.0.1:6364"},
 		AllowedMethods: []string{"GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders: []string{"Accept", "Content-Type"},
 	}))
