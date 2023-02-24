@@ -37,6 +37,10 @@ jobs:
         run: |
           npm install -g dredd
 
+      - name: docker compose up
+        run: |
+          docker compose -f docker-compose.yaml up -d
+
       - name: Run Dredd
         run: |
           make dredd
