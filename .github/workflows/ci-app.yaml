@@ -39,11 +39,11 @@ jobs:
 
       - name: Run Server
         run: |
-          go run ./app/src/cmd/api/main.go &
+          docker compose -f docker-compose.yaml up -d
 
       - name: Run Dredd
         run: |
-          dredd ./openapi/openapi.yaml localhost:80 --hookfiles=./openapi/dredd/hook.js --reporter=apiary
+          dredd ./openapi/openapi.yaml http://localhost:8090 --hookfiles=./openapi/dredd/hook.js --reporter=apiary
 
 
 

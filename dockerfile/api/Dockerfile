@@ -7,4 +7,5 @@ COPY ./go.mod /home
 COPY ./go.sum /home
 RUN go mod download
 
+EXPOSE 8090
 CMD ["air", "-c", "air.toml"]
