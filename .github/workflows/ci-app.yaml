@@ -37,13 +37,9 @@ jobs:
         run: |
           npm install -g dredd
 
-      - name: Run Server
-        run: |
-          docker compose -f docker-compose.yaml up -d
-
       - name: Run Dredd
         run: |
-          dredd ./openapi/openapi.yaml http://localhost:8090 --hookfiles=./openapi/dredd/hook.js --reporter=apiary
+          make dredd
 
 
 

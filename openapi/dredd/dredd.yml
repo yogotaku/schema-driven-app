@@ -1,9 +1,9 @@
 color: true
 dry-run: null
-hookfiles: ./hook.js
+hookfiles: ./openapi/dredd/hook.js
 language: nodejs
 require: null
-server: null
+server: docker compose -f docker-compose.yaml up -d
 server-wait: 3
 init: false
 custom:
@@ -31,5 +31,5 @@ hooks-worker-term-retry: 500
 hooks-worker-handler-host: 127.0.0.1
 hooks-worker-handler-port: 61321
 config: ./dredd.yml
-blueprint: ../openapi.yaml
+blueprint: ./openapi/openapi.yaml
 endpoint: 'http://localhost:8090'

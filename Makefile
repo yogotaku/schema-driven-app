@@ -38,9 +38,9 @@ prism-mock-local-proxy:
 .PHONY: dredd
 ## dreddを使用してAPIテストを実施する
 dredd:
-	cd ./openapi/dredd; dredd
+	dredd --config ./openapi/dredd/dredd.yml
 
 .PHONY: dredd-names
 ## dreddにおける各テストケースの名前を出力する
 dredd-names:
-	cd ./openapi/dredd; dredd --names
+	dredd --config ./openapi/dredd/dredd.yml --names
