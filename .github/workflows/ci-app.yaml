@@ -41,5 +41,9 @@ jobs:
         run: |
           make dredd
 
+      - name: docker compose down
+        run: |
+          docker compose down
+
 
 
