@@ -14,11 +14,15 @@ jobs:
     openapi-lint:
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v3
-        - uses: stoplightio/spectral-action@latest
-          with:
-            file_glob: './openapi/openapi.yaml'
-            spectral_ruleset: './openapi/.spectral.yaml'
+        - name: Check out
+          uses: actions/checkout@v3
+
+        - name: Install spectral
+          uses: curl -L "https://get.spectralops.io/latest/x/sh?dsn=$SPECTRAL_DSN" | sh
+
+        - name: Lint openapi
+          run: |
+            make openapi-lint
 
     # conpare-schema:
     #   runs-on: ubuntu-latest
@@ -77,7 +81,7 @@ jobs:
 
 #       - name: Install Dredd
 #         run: |
-#           npm install -g dredd
+#           npm install -g dredd@14.1.0
 
 #       - name: docker compose up
 #         run: |
