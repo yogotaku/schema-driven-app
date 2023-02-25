@@ -25,76 +25,76 @@ jobs:
           run: |
             make openapi-lint
 
-    # conpare-schema:
-    #   runs-on: ubuntu-latest
-    #   steps:
-    #     - name: Check out
-    #       uses: actions/checkout@v3
+    conpare-schema:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check out
+          uses: actions/checkout@v3
 
-    #     - name: Set up Golang
-    #       uses: actions/setup-go@v3
-    #       with:
-    #         go-version: 1.20.0
+        - name: Set up Golang
+          uses: actions/setup-go@v3
+          with:
+            go-version: 1.20.0
 
-    #     - name: cache
-    #       uses: actions/cache@v3
-    #       with:
-    #         path: ~/go/pkg/mod
-    #         key: ${{ runner.os }}-go-${{ hashFiles('go.sum') }}
-    #         restore-keys: |
-    #           ${{ runner.os }}-go-
+        - name: cache
+          uses: actions/cache@v3
+          with:
+            path: ~/go/pkg/mod
+            key: ${{ runner.os }}-go-${{ hashFiles('go.sum') }}
+            restore-keys: |
+              ${{ runner.os }}-go-
 
-    #     - name: Get oapi-codegen
-    #       run: |
-    #         go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest
+        - name: Get oapi-codegen
+          run: |
+            go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest
 
-    #     - name: Get dependencies
-    #       run: go mod download
+        - name: Get dependencies
+          run: go mod download
 
-    #     - name: make directory
-    #       run: |
-    #         mkdir -p tmp
+        - name: make directory
+          run: |
+            mkdir -p tmp
 
-    #     - name: Copy chema files
-    #       run: |
-    #         cp ./app/src/schema/models.gen.go ./tmp/models.gen.go
-    #         cp ./app/src/schema/server.gen.go ./tmp/server.gen.go
+        - name: Copy chema files
+          run: |
+            cp ./app/src/schema/models.gen.go ./tmp/models.gen.go
+            cp ./app/src/schema/server.gen.go ./tmp/server.gen.go
 
-    #     - name: Create schema
-    #       run: |
-    #         make openapi-schema
+        - name: Create schema
+          run: |
+            make openapi-schema
 
-    #     - name: Compare schema files
-    #       run: |
-    #         DIFF1=$(diff ./app/src/schema/models.gen.go ./tmp/models.gen.go | wc -l)
-    #         DIFF2=$(diff ./app/src/schema/server.gen.go ./tmp/server.gen.go | wc -l)
-    #         if [ $DIFF1 -ne 0 ] || [ $DIFF2 -ne 0 ]
-    #         then
-    #           echo "There are different in schema"
-    #           exit 1
-    #         fi
+        - name: Compare schema files
+          run: |
+            DIFF1=$(diff ./app/src/schema/models.gen.go ./tmp/models.gen.go | wc -l)
+            DIFF2=$(diff ./app/src/schema/server.gen.go ./tmp/server.gen.go | wc -l)
+            if [ $DIFF1 -ne 0 ] || [ $DIFF2 -ne 0 ]
+            then
+              echo "There are different in schema"
+              exit 1
+            fi
 
-#   dredd-test:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Check out
-#         uses: actions/checkout@v3
+    dredd-test:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check out
+          uses: actions/checkout@v3
 
-#       - name: Install Dredd
-#         run: |
-#           npm install -g dredd@14.1.0
+        - name: Install Dredd
+          run: |
+            npm install -g dredd@14.1.0
 
-#       - name: docker compose up
-#         run: |
-#           docker compose -f docker-compose.yaml up -d
+        - name: docker compose up
+          run: |
+            docker compose -f docker-compose.yaml up -d
 
-#       - name: Run Dredd
-#         run: |
-#           make dredd
+        - name: Run Dredd
+          run: |
+            make dredd
 
-#       - name: docker compose down
-#         run: |
-#           docker compose down
+        - name: docker compose down
+          run: |
+            docker compose down
 
 
 
