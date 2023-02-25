@@ -1,3 +1,11 @@
+.PNONY: build
+build:
+	docker compose build
+
+.PNONY: up
+up:
+	docker compose up
+
 .PNONY: openapi-models
 # openapiのcomponentsからコードを自動生成します
 openapi-models:
@@ -12,9 +20,10 @@ openapi-server:
 # openapiからコードを自動生成します
 openapi-schema: openapi-models openapi-server
 
-.PNONY: up
-up:
-	docker compose up
+.PNONY: openapi-lint
+# openapi.yamlのlintを実行します
+openapi-lint:
+	spectral lint --ruleset=./openapi/.spectral.yaml ./openapi/openapi.yaml
 
 .PHONY: prism-mock
 ## openapiの記述に従ってmockサーバーを起動する
@@ -34,9 +43,9 @@ prism-mock-local-proxy:
 .PHONY: dredd
 ## dreddを使用してAPIテストを実施する
 dredd:
-	cd ./openapi/dredd; dredd
+	dredd --config ./openapi/dredd/dredd.yml
 
 .PHONY: dredd-names
 ## dreddにおける各テストケースの名前を出力する
 dredd-names:
-	cd ./openapi/dredd; dredd --names
+	dredd --config ./openapi/dredd/dredd.yml --names

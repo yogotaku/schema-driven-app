@@ -1,10 +1,10 @@
 color: true
 dry-run: null
-hookfiles: ./hook.js
+hookfiles: ./openapi/dredd/hook.js
 language: nodejs
 require: null
-server: null
-server-wait: 3
+server: docker compose -f docker-compose.yaml up -d
+server-wait: 10
 init: false
 custom:
   # apiaryのApiKeyとApiNameを設定することで、apiaryのウェブサイト上にdreddの実行結果を出力できます。
@@ -31,5 +31,5 @@ hooks-worker-term-retry: 500
 hooks-worker-handler-host: 127.0.0.1
 hooks-worker-handler-port: 61321
 config: ./dredd.yml
-blueprint: ../openapi.yaml
+blueprint: ./openapi/openapi.yaml
 endpoint: 'http://localhost:8090'
