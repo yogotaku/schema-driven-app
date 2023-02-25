@@ -11,27 +11,56 @@ on:
       - master
 
 jobs:
-  dredd-test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out
-        uses: actions/checkout@v3
+    conpare-spec:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check out
+          uses: actions/checkout@
 
-      - name: Install Dredd
-        run: |
-          npm install -g dredd
+        - name: make directory
+          run: |
+            mkdir -p tmp
 
-      - name: docker compose up
-        run: |
-          docker compose -f docker-compose.yaml up -d
+        - name: Copy chema files
+          run: |
+            cp ./app/src/schema/models.gen.go ./tmp/models.gen.go
+            cp ./app/src/schema/server.gen.go ./tmp/server.gen.go
 
-      - name: Run Dredd
-        run: |
-          make dredd
+        - name: Create schema
+          run: |
+            make openapi-schema
 
-      - name: docker compose down
-        run: |
-          docker compose down
+        - name: Compare schema files
+          run: |
+            DIFF1=$(diff ./app/src/schema/models.gen.go ./tmp/models.gen.go | wc -l)
+            DIFF2=$(diff ./app/src/schema/server.gen.go ./tmp/server.gen.go | wc -l)
+            if [$DIFF1 -ne 0] || [$DIFF2 -ne 0]
+            then
+              echo "There are different in schema"
+              exit 1
+            fi
+
+#   dredd-test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check out
+#         uses: actions/checkout@v3
+
+#       - name: Install Dredd
+#         run: |
+#           npm install -g dredd
+
+#       - name: docker compose up
+#         run: |
+#           docker compose -f docker-compose.yaml up -d
+
+#       - name: Run Dredd
+#         run: |
+#           make dredd
+
+#       - name: docker compose down
+#         run: |
+#           docker compose down
 
 
 
