@@ -1,8 +1,18 @@
-.PNONY: build
+.DEFAULT_GOAL := help
+
+## このMakefileのhelpを表示します
+help:
+	@make2help $(MAKEFILE_LIST)
+
+.PNONY: rebuild
+## local環境にdockerコンテナ群を再構築します
 build:
-	docker compose build
+	docker-compose stop
+	docker-compose rm -f
+	docker compose up --build
 
 .PNONY: up
+## local環境にdockerコンテナ群を立ち上げます
 up:
 	docker compose up
 
