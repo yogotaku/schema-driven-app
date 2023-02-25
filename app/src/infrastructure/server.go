@@ -34,9 +34,9 @@ func RunServer() {
 
 	r := chi.NewRouter()
 
+	r.Use(middleware.RequestID)
+	r.Use(middleware.RealIP)
 	r.Use(middleware.Logger)
-
-	// panicが起きた際に復帰する
 	r.Use(middleware.Recoverer)
 
 	// CORS設定
