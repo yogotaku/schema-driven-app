@@ -54,7 +54,7 @@ jobs:
           run: |
             DIFF1=$(diff ./app/src/schema/models.gen.go ./tmp/models.gen.go | wc -l)
             DIFF2=$(diff ./app/src/schema/server.gen.go ./tmp/server.gen.go | wc -l)
-            if [$DIFF1 -ne 0] || [$DIFF2 -ne 0]
+            if [ $DIFF1 -ne 0 ] || [ $DIFF2 -ne 0 ]
             then
               echo "There are different in schema"
               exit 1
