@@ -19,7 +19,7 @@ jobs:
 
         - name: Install spectral
           run: |
-            curl -L "https://get.spectralops.io/latest/x/sh?dsn=$SPECTRAL_DSN" | sh
+            npm install -g @stoplight/spectral-cli
 
         - name: Lint openapi
           run: |
