@@ -11,7 +11,7 @@ on:
       - master
 
 jobs:
-    conpare-spec:
+    conpare-schema:
       runs-on: ubuntu-latest
       steps:
         - name: Check out
