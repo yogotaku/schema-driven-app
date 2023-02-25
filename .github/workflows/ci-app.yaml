@@ -18,7 +18,8 @@ jobs:
           uses: actions/checkout@v3
 
         - name: Install spectral
-          uses: curl -L "https://get.spectralops.io/latest/x/sh?dsn=$SPECTRAL_DSN" | sh
+          run: |
+            curl -L "https://get.spectralops.io/latest/x/sh?dsn=$SPECTRAL_DSN" | sh
 
         - name: Lint openapi
           run: |
