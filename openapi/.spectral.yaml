@@ -1,1 +1,4 @@
-extends: ["spectral:oas", "spectral:asyncapi"]
+extends:
+  - "spectral:oas"
+  - "spectral:asyncapi"
+  # - "./spectral/rules.yaml"

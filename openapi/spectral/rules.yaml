@@ -1,0 +1,14 @@
+rules:
+  operation-id-case:
+    # ルールの説明
+    description: "operationIdがHTTPメソッドから始まるcamelCaseであること"
+
+    # ルールが適用される場所
+    given: "$.paths.*.*"
+
+    then:
+      field: "operationId"
+      function: "pattern"
+      functionOptions:
+        match: "^(get|put|post|delete|options|head|patch)[A-Z][a-zA-Z0-9]*$"
+      errorMessage: "operationId should be in camelCase starting with HTTP method"
