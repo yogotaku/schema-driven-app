@@ -33,7 +33,7 @@ openapi-schema: openapi-models openapi-server
 .PNONY: openapi-lint
 # openapi.yamlのlintを実行します
 openapi-lint:
-	spectral lint --ruleset=./openapi/.spectral.yaml ./openapi/openapi.yaml
+	spectral lint --ruleset=./openapi/spectral/.spectral.yaml ./openapi/openapi.yaml
 
 .PHONY: prism-mock
 ## openapiの記述に従ってmockサーバーを起動する
