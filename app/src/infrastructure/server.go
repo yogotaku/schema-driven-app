@@ -1,36 +1,15 @@
 package infrastructure
 
 import (
-	"encoding/json"
 	"net/http"
 
-	oapiMiddleware "github.com/deepmap/oapi-codegen/pkg/chi-middleware"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
-
-	"github.com/yogotaku/schema-driven-app/app/src/interface/controllers"
-	"github.com/yogotaku/schema-driven-app/app/src/schema"
 )
 
-type ApiServer struct {
-	*controllers.UserController
-	*controllers.PetController
-}
-
-func NewApiServer() *ApiServer {
-	return &ApiServer{
-		UserController: controllers.NewUserController(),
-		PetController:  controllers.NewPetController(),
-	}
-}
-
+// APIサーバーの起動
 func RunServer() {
-	// スキーマの定義を取得
-	swagger, _ := schema.GetSwagger()
-
-	// スキーマのServerInterfaceを実装した型を取得
-	server := NewApiServer()
 
 	r := chi.NewRouter()
 
@@ -46,16 +25,20 @@ func RunServer() {
 		AllowedHeaders: []string{"Accept", "Content-Type"},
 	}))
 
-	// リクエストがスキーマの定義に合っているかのバリデーション
-	r.Use(oapiMiddleware.OapiRequestValidatorWithOptions(swagger, &oapiMiddleware.Options{
-		ErrorHandler: func(w http.ResponseWriter, message string, statusCode int) {
-			w.Header().Set("Content-Type", "application/json")
-			w.WriteHeader(statusCode)
-			json.NewEncoder(w).Encode(message)
-		},
-	}))
+	// スキーマの定義を取得
+	// swagger, _ := schema.GetSwagger()
 
-	schema.HandlerFromMux(server, r)
+	// リクエストがスキーマの定義に合っているかのバリデーション
+	// r.Use(oapiMiddleware.OapiRequestValidator(swagger))
+
+	// リクエストがスキーマの定義に合っているかのバリデーション
+	// r.Use(oapiMiddleware.OapiRequestValidatorWithOptions(swagger, &oapiMiddleware.Options{
+	// 	ErrorHandler: func(w http.ResponseWriter, message string, statusCode int) {
+	// 		w.Header().Set("Content-Type", "application/json")
+	// 		w.WriteHeader(statusCode)
+	// 		json.NewEncoder(w).Encode(message)
+	// 	},
+	// }))
 
 	http.ListenAndServe(":80", r)
 }
