@@ -10,22 +10,20 @@ servers:
   - url: 'http://localhost:8090'
     description: localhost
 paths:
-  '/users/{userId}':
+  /users/{userId}:
     parameters:
       - schema:
           type: integer
           minimum: 1
         name: userId
         in: path
-        example: 1
+        example: '1'
         required: true
         description: データベースに存在するユーザーのID
     get:
       summary: Get User Info by User ID
       description: idにマッチしたユーザー情報を取得する
-      operationId: findUserByID
-      tags:
-        - user
+      operationId: find-user-by-id
       responses:
         '200':
           description: OK
@@ -50,6 +48,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/NewUser'
+              example:
+                id: 142
+                firstName: Alice
+                lastName: Smith
+                email: alice.smith@gmail.com
+                dateOfBirth: '1997-10-31'
       responses:
         '204':
           description: No Content
@@ -71,6 +75,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/NewUser'
+              example:
+                id: 142
+                firstName: Alice
+                lastName: Smith
+                email: alice.smith@gmail.com
+                dateOfBirth: '1997-10-31'
       responses:
         '201':
           description: User Created
@@ -126,7 +136,6 @@ paths:
                 - id: 17
                   name: Tama
                   tag: cat
-
         default:
           description: unexpected error
           content:
@@ -153,9 +162,9 @@ components:
               example: '2019-08-24'
               description: ユーザー情報の作成日時
         - required:
-          - id
-          - emailVerified
-          - createDate
+            - id
+            - emailVerified
+            - createdDate
           example:
             id: 142
             firstName: Alice
@@ -164,7 +173,6 @@ components:
             dateOfBirth: '1997-10-31'
             emailVerified: true
             createDate: '2019-08-24'
-
     NewUser:
       title: NewUser
       type: object
@@ -186,12 +194,6 @@ components:
         - firstName
         - lastName
         - email
-      example:
-        id: 142
-        firstName: Alice
-        lastName: Smith
-        email: alice.smith@gmail.com
-        dateOfBirth: '1997-10-31'
     Pet:
       allOf:
         - $ref: '#/components/schemas/NewPet'
@@ -202,7 +204,6 @@ components:
               description: ペットのユニークID
         - required:
             - id
-
     NewPet:
       required:
         - name
@@ -218,7 +219,6 @@ components:
           maxLength: 15
           minLength: 1
           pattern: '^[a-z]+$'
-
     Error:
       required:
         - code
