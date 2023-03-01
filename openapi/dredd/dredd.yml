@@ -1,6 +1,6 @@
 color: true
 dry-run: null
-# hookfiles: ./openapi/dredd/hook.js
+hookfiles: ./openapi/dredd/hook.js
 language: nodejs
 require: null
 server: docker compose -f docker-compose.yaml up -d
