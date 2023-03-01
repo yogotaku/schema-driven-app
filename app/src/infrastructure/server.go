@@ -6,6 +6,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
+	// oapiMiddleware "github.com/deepmap/oapi-codegen/pkg/chi-middleware"
 )
 
 // APIサーバーの起動
