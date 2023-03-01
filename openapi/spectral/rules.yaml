@@ -1,0 +1,15 @@
+rules:
+  operation-id-case:
+    # ルールの説明
+    description: "operationIdがcamelCaseであること"
+
+    # ルールが適用される場所
+    given: "$.paths.*.*"
+
+    severity: warn
+    then:
+      field: "operationId"
+      function: "pattern"
+      functionOptions:
+        match: "^[a-z][a-zA-Z]*$"
+      errorMessage: "operationId should be in camelCase"
