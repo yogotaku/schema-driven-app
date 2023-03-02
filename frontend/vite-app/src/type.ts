@@ -26,7 +26,7 @@ export interface NewUser {
   firstName: string;
   lastName: string;
   email: string;
-  dateOfBirth: string;
+  dateOfBirth?: string;
 }
 
 export interface Pet {
