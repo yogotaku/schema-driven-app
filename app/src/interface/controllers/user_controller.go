@@ -39,7 +39,7 @@ func (c *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
 		CreateDate:    types.Date{Time: u.CreateDate},
 	}
 
-	schema.RenderJSONResponse(w, http.StatusCreated, res)
+	schema.RenderJSONResponse(w, http.StatusOK, res)
 }
 
 func (c *UserController) FindUserById(w http.ResponseWriter, r *http.Request, userId int) {

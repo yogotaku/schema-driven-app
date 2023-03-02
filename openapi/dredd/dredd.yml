@@ -3,7 +3,7 @@ dry-run: null
 hookfiles: ./openapi/dredd/hook.js
 language: nodejs
 require: null
-server: docker compose -f docker-compose.yaml up -d
+server: null
 server-wait: 3
 init: false
 custom:
