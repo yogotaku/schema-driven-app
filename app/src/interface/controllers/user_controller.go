@@ -21,10 +21,13 @@ func (c *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(&body)
 
 	u := data.User{
-		FirstName:   body.FirstName,
-		LastName:    body.LastName,
-		Email:       string(body.Email),
-		DateOfBirth: body.DateOfBirth.Time,
+		FirstName: body.FirstName,
+		LastName:  body.LastName,
+		Email:     string(body.Email),
+	}
+
+	if body.DateOfBirth != nil {
+		u.DateOfBirth = body.DateOfBirth.Time
 	}
 
 	u = gateways.CreateUser(u)
@@ -65,7 +68,9 @@ func (c *UserController) UpdateUserByID(w http.ResponseWriter, r *http.Request, 
 	u.FirstName = body.FirstName
 	u.LastName = body.LastName
 	u.Email = string(body.Email)
-	u.DateOfBirth = body.DateOfBirth.Time
+	if body.DateOfBirth != nil {
+		u.DateOfBirth = body.DateOfBirth.Time
+	}
 
 	gateways.UpdateUser(u)
 

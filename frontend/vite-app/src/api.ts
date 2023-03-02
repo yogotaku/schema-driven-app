@@ -32,7 +32,7 @@ export const createUser = async (user: NewUser): Promise<User | null> => {
         firstName,
         lastName,
         email,
-        dateOfBirth,
+        ...(dateOfBirth?.length !== 0 ? { dateOfBirth } : {}),
       },
     });
 
@@ -59,7 +59,7 @@ export const patchUser = async (
         firstName,
         lastName,
         email,
-        dateOfBirth,
+        ...(dateOfBirth?.length !== 0 ? { dateOfBirth } : {}),
       },
     });
 
