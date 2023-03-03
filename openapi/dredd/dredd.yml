@@ -4,7 +4,7 @@ hookfiles: ./openapi/dredd/hook.js
 language: nodejs
 require: null
 server: docker compose -f docker-compose.yaml up -d
-server-wait: 10
+server-wait: 15
 init: false
 custom:
   # apiaryのApiKeyとApiNameを設定することで、apiaryのウェブサイト上にdreddの実行結果を出力できます。
