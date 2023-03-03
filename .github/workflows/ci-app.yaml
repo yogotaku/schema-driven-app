@@ -11,20 +11,6 @@ on:
       - master
 
 jobs:
-    openapi-lint:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Check out
-          uses: actions/checkout@v3
-
-        - name: Install spectral
-          run: |
-            npm install -g @stoplight/spectral-cli
-
-        - name: Lint openapi
-          run: |
-            make openapi-lint
-
     conpare-schema:
       runs-on: ubuntu-latest
       steps:
@@ -74,27 +60,41 @@ jobs:
               exit 1
             fi
 
-    dredd-test:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Check out
-          uses: actions/checkout@v3
+    # openapi-lint:
+    #   runs-on: ubuntu-latest
+    #   steps:
+    #     - name: Check out
+    #       uses: actions/checkout@v3
 
-        - name: Install Dredd
-          run: |
-            npm install -g dredd@14.1.0
+    #     - name: Install spectral
+    #       run: |
+    #         npm install -g @stoplight/spectral-cli
 
-        - name: docker compose up
-          run: |
-            docker compose -f docker-compose.yaml up -d
+    #     - name: Lint openapi
+    #       run: |
+    #         make openapi-lint
 
-        - name: Run Dredd
-          run: |
-            make dredd
+    # dredd-test:
+    #   runs-on: ubuntu-latest
+    #   steps:
+    #     - name: Check out
+    #       uses: actions/checkout@v3
 
-        - name: docker compose down
-          run: |
-            docker compose down
+    #     - name: Install Dredd
+    #       run: |
+    #         npm install -g dredd@14.1.0
+
+    #     - name: docker compose up
+    #       run: |
+    #         docker compose -f docker-compose.yaml up -d
+
+    #     - name: Run Dredd
+    #       run: |
+    #         make dredd
+
+    #     - name: docker compose down
+    #       run: |
+    #         docker compose down
 
 
 

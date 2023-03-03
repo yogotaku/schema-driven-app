@@ -3,8 +3,8 @@ dry-run: null
 hookfiles: ./openapi/dredd/hook.js
 language: nodejs
 require: null
-server: docker compose -f docker-compose.yaml up -d
-server-wait: 10
+server: null
+server-wait: 3
 init: false
 custom:
   # apiaryのApiKeyとApiNameを設定することで、apiaryのウェブサイト上にdreddの実行結果を出力できます。

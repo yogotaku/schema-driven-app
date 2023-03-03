@@ -42,10 +42,10 @@ func (c *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
 		CreateDate:    types.Date{Time: u.CreateDate},
 	}
 
-	schema.RenderJSONResponse(w, http.StatusCreated, res)
+	schema.RenderJSONResponse(w, http.StatusOK, res)
 }
 
-func (c *UserController) FindUserByID(w http.ResponseWriter, r *http.Request, userId int) {
+func (c *UserController) FindUserById(w http.ResponseWriter, r *http.Request, userId int) {
 	u := gateways.FindUserByID(userId)
 	res := schema.User{
 		Id:            u.ID,

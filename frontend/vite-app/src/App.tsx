@@ -56,18 +56,18 @@ const App: FC = () => {
   const handleOnClickCreate = async () => {
     const user = await createUserFunc(createUser);
     if (user !== null) {
-      window.alert(`id=${user.id}のユーザーを登録しました`);
+      window.alert(`登録成功！！`);
     } else {
-      window.alert('ユーザーの登録に失敗しました');
+      window.alert('登録失敗・・・');
     }
   };
 
   const handleOnClickUpdate = async () => {
     const res = await patchUserFunc(id, patchUser);
     if (res) {
-      window.alert('ユーザー情報の更新に成功しました');
+      window.alert('更新成功！！');
     } else {
-      window.alert('ユーザー情報の更新に失敗しました');
+      window.alert('更新失敗・・・');
     }
   };
 
